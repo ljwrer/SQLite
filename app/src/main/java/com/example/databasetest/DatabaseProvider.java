@@ -41,8 +41,8 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        db=helper.getWritableDatabase();
-        Cursor cursor;
+        SQLiteDatabase db=helper.getWritableDatabase();
+        Cursor cursor=null;
         switch (uriMatcher.match(uri))
         {
             case TABLE1_DIR:
@@ -52,7 +52,15 @@ public class DatabaseProvider extends ContentProvider {
                 String bookID=uri.getPathSegments().get(1);
                 cursor=db.query("Book",projection,"id=?",new String[]{bookID},null,null,sortOrder);
                 break;
+            case TABLE2_DIR:
+                cursor=db.query("Category",projection,selection,selectionArgs,null,null,sortOrder);
+                break;
+            case TABLE2_ITEM:
+                String categoryID=uri.getPathSegments().get(1);
+                cursor=db.query("Category",projection,"id=?",new String[]{categoryID},null,null,sortOrder);
+                break;
         }
+        return cursor;
     }
 
     @Override
@@ -62,7 +70,12 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        SQLiteDatabase db=helper.getWritableDatabase();
+        switch (uriMatcher.match(uri))
+        {
+            case:TABLE1_DIR
+        }
+
     }
 
     @Override
