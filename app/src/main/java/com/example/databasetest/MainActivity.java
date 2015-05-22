@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
     Button query;
     TextView result;
     Button replace;
+    Button clear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +121,15 @@ public class MainActivity extends Activity {
                 }finally {
                     db.endTransaction();
                 }
+            }
+        });
+        clear=(Button)findViewById(R.id.clear);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase db=helper.getWritableDatabase();
+                db.execSQL("drop table if exists Book");
+                db.execSQL("drop table if exists Category");
             }
         });
     }
